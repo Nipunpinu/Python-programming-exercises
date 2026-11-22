@@ -163,6 +163,46 @@ Hints:
 If the output received is in decimal form, it should be rounded off to its nearest value (for example, if the output received is 26.0, it should be printed as 26)
 In case of input data being supplied to the question, it should be assumed to be a console input. 
 
+**Step-by-Step Expression Breakdown**:
+The expression `int(round(math.sqrt(2*c*float(d)/h)))` evaluates the formula $Q = \sqrt{\frac{2 \times C \times D}{H}}$ through the following pipeline:
+1. `float(d)`: Converts the parsed input string token `d` into a floating-point number so subsequent arithmetic preserves fractional precision.
+2. `2 * c * float(d)`: Multiplies $2 \times 50 \times D = 100 \times D$.
+3. `... / h`: Divides the numerator by $H = 30$, producing the radicand $\frac{100 \times D}{30}$.
+4. `math.sqrt(...)`: Computes the positive square root of the radicand.
+5. `round(...)`: Rounds the resulting floating-point value to the nearest integer.
+6. `int(...)`: Converts the rounded float to an integer type for clean string formatting.
+
+**Exact Intermediate Values for Published Input (`100,150,180`)**:
+- For $D = 100$:
+  - `float(d)`: $100.0$
+  - Numerator $2 \times 50 \times 100.0 = 10000.0$
+  - Radicand $\frac{10000.0}{30} \approx 333.3333333333333$
+  - Square root $\sqrt{333.3333333333333} \approx 18.257418583505537$
+  - `round(...)`: $18$
+  - `int(...)`: $18$
+- For $D = 150$:
+  - `float(d)`: $150.0$
+  - Numerator $2 \times 50 \times 150.0 = 15000.0$
+  - Radicand $\frac{15000.0}{30} = 500.0$
+  - Square root $\sqrt{500.0} \approx 22.360679774997898$
+  - `round(...)`: $22$
+  - `int(...)`: $22$
+- For $D = 180$:
+  - `float(d)`: $180.0$
+  - Numerator $2 \times 50 \times 180.0 = 18000.0$
+  - Radicand $\frac{18000.0}{30} = 600.0$
+  - Square root $\sqrt{600.0} \approx 24.49489742783178$
+  - `round(...)`: $24$
+  - `int(...)`: $24$
+- Joined Output: `18,22,24`
+
+**Smallest Supported Input**:
+- For non-negative integer input $D = 0$:
+  - `float(d)`: $0.0$
+  - Radicand: $\frac{2 \times 50 \times 0.0}{30} = 0.0$
+  - $\sqrt{0.0} = 0.0 \to \text{round} \to \text{int} \to 0$
+  - Output: `0`
+
 Solution:
 ```python
 import math
