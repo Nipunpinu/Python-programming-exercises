@@ -165,12 +165,12 @@ In case of input data being supplied to the question, it should be assumed to be
 
 **Step-by-Step Expression Breakdown**:
 The expression `int(round(math.sqrt(2*c*float(d)/h)))` evaluates the formula $Q = \sqrt{\frac{2 \times C \times D}{H}}$ through the following pipeline:
-1. `float(d)`: Converts the parsed input string token `d` into a floating-point number so subsequent arithmetic preserves fractional precision.
-2. `2 * c * float(d)`: Multiplies $2 \times 50 \times D = 100 \times D$.
-3. `... / h`: Divides the numerator by $H = 30$, producing the radicand $\frac{100 \times D}{30}$.
+1. `float(d)`: Converts the input text token `d` to a floating-point number, allowing decimal values as well as whole numbers.
+2. `2*c*float(d)`: Multiplies from left to right: first $2 \times C$ (where $C=50$), then by $D$. For $D=100$, this gives $2 \times 50 \times 100.0 = 10000.0$.
+3. `/h`: Divides that numerator by $H=30$ to produce the radicand (the value under the square root). For $D=100$, $10000.0 / 30 = 333.3333333333333$.
 4. `math.sqrt(...)`: Computes the positive square root of the radicand.
-5. `round(...)`: Rounds the resulting floating-point value to the nearest integer.
-6. `int(...)`: Converts the rounded float to an integer type for clean string formatting.
+5. `round(...)`: Rounds the square root to the nearest whole number; with no `ndigits` argument, Python returns an integer.
+6. `int(...)`: Ensures the rounded result is an integer before converting it to a string. It is redundant for this `round` call, but is retained from the original solution.
 
 **Exact Intermediate Values for Published Input (`100,150,180`)**:
 - For $D = 100$:
@@ -197,7 +197,7 @@ The expression `int(round(math.sqrt(2*c*float(d)/h)))` evaluates the formula $Q 
 - Joined Output: `18,22,24`
 
 **Smallest Supported Input**:
-- For non-negative integer input $D = 0$:
+- Since the square root requires $D \ge 0$, the smallest supported input is $D = 0$:
   - `float(d)`: $0.0$
   - Radicand: $\frac{2 \times 50 \times 0.0}{30} = 0.0$
   - $\sqrt{0.0} = 0.0 \to \text{round} \to \text{int} \to 0$
