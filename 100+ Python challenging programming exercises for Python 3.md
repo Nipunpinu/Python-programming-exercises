@@ -1435,12 +1435,24 @@ u = s
 print(u)
 ```
 
-For the input `hello`, `s` is `"hello"` and has type `str`. The assignment makes `u` the same string, also of type `str`, and `print(u)` displays:
+**Example**:
+
+Input: `hello`
+
+Intermediate: `s` is `"hello"` with type `str`; `u = s` assigns that same Unicode string to `u`, which also has type `str`.
+
+Output:
 ```text
 hello
 ```
 
-The smallest non-empty ASCII input is `a`. It is also read as a `str` and prints:
+**Smallest Non-Empty Input**:
+
+Input: `a`
+
+It is read as a `str` and printed without conversion.
+
+Output:
 ```text
 a
 ```
